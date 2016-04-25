@@ -60,6 +60,10 @@ object GogsAPI {
 				callback(Array[Token]())
 			}
 
+			override def onFailure(statusCode: Int, headers: Array[Header], errorString: String, error: Throwable): Unit = {
+				callback(Array[Token]())
+			}
+
 		}, RequestMethod.GET)
 	}
 

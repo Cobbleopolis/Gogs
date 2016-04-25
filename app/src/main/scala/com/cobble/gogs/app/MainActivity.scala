@@ -13,7 +13,8 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.ViewGroup.LayoutParams
 import android.widget.{RelativeLayout, TextView, Toast}
-import com.cobble.gogs.app.gogs.GogsAPI;
+import com.cobble.gogs.app.fragment.{CobbleFragment, HomeFragment}
+import com.cobble.gogs.app.gogs.GogsAPI
 
 class MainActivity extends AppCompatActivity with NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,11 +28,12 @@ class MainActivity extends AppCompatActivity with NavigationView.OnNavigationIte
 
 	private var mSelectedId: Int = _
 
-	protected override def onCreate(savedInstanceState: Bundle) {
+	protected override def onCreate(savedInstanceState: Bundle): Unit = {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 		setToolbar()
 		initView()
+		initFrag(savedInstanceState)
 		drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
 		mDrawerLayout.setDrawerListener(drawerToggle)
 		drawerToggle.syncState()
@@ -39,25 +41,37 @@ class MainActivity extends AppCompatActivity with NavigationView.OnNavigationIte
 		itemSelection(mSelectedId)
 	}
 
-	private def setToolbar() {
+	private def setToolbar(): Unit = {
 		toolbar = findViewById(R.id.toolbar).asInstanceOf[Toolbar]
 //		if (toolbar != null) {
 //			setSupportActionBar(toolbar)
 //		}
 	}
 
-	private def initView() {
+	private def initView(): Unit = {
 		mDrawer = findViewById(R.id.main_drawer).asInstanceOf[NavigationView]
 		mDrawer.setNavigationItemSelectedListener(this)
 		mDrawerLayout = findViewById(R.id.drawer_layout).asInstanceOf[DrawerLayout]
 	}
 
-	private def itemSelection(mSelectedId: Int) {
+	private def itemSelection(mSelectedId: Int): Unit = {
 		mDrawerLayout.closeDrawer(GravityCompat.START)
 
 	}
 
-	override def onConfigurationChanged(newConfig: Configuration) {
+	private def initFrag(savedInstanceState: Bundle): Unit = {
+		if (findViewById(R.id.fragment_container) != null) {
+			if(savedInstanceState != null)
+				return
+			val homeFragment: HomeFragment = new HomeFragment
+
+			homeFragment.setArguments(getIntent.getExtras)
+
+			getSupportFragmentManager.beginTransaction().add(R.id.fragment_container, homeFragment).commit()
+		}
+	}
+
+	override def onConfigurationChanged(newConfig: Configuration): Unit = {
 		super.onConfigurationChanged(newConfig)
 		drawerToggle.onConfigurationChanged(newConfig)
 	}
@@ -69,26 +83,8 @@ class MainActivity extends AppCompatActivity with NavigationView.OnNavigationIte
 		true
 	}
 
-	override def onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+	override def onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle): Unit = {
 		super.onSaveInstanceState(outState, outPersistentState)
 		outState.putInt("SELECTED_ID", mSelectedId)
-	}
-
-	def requestRepos(): Unit = {
-		val layout: RelativeLayout = findViewById(R.id.main_content).asInstanceOf[RelativeLayout]
-		Toast.makeText(getApplicationContext, "Request Started", Toast.LENGTH_SHORT).show()
-		GogsAPI.getUserRepos(repos => {
-			var i = 0
-			repos.foreach(repo => {
-				val textView = new TextView(getApplicationContext)
-				textView.setText(repo.fullName)
-				val layoutParams: RelativeLayout.LayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-				layoutParams.setMargins(0, (i + 1) * textView.getTextSize.toInt, 0, 0)
-				textView.setTextColor(Color.BLACK)
-				textView.setLayoutParams(layoutParams)
-				layout.addView(textView)
-				i += 1
-			})
-		})
 	}
 }
