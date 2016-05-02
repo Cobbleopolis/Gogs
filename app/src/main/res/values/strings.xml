@@ -17,6 +17,8 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_login">LoginActivity</string>
 
+    <string name="loading_text">Loading...</string>
+
     <string name="login_hint_server">Gogs Server</string>
     <string name="login_hint_protocol">HTTP Protocol</string>
     <string name="login_hint_username">Username</string>
@@ -27,4 +29,8 @@
     <string name="userData_protocol" translatable="false">com.cobble.gogs.app.userData.protocol</string>
     <string name="userData_username" translatable="false">com.cobble.gogs.app.userData.username</string>
     <string name="userData_token" translatable="false">com.cobble.gogs.app.userData.token</string>
+
+    <string name="drawer_profile">Profile</string>
+    <string name="drawer_repos">Repositories</string>
+    <string name="drawer_settings">Settings</string>
 </resources>

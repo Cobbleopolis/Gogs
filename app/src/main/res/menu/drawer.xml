@@ -2,20 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
-        <item android:id="@+id/drawer_home"
+        <item android:id="@+id/drawer_profile"
               android:checked="false"
-              android:icon="@drawable/ic_cast_dark"
-              android:title="Home"/>
+              android:icon="@drawable/ic_person_24dp"
+              android:title="@string/drawer_profile"/>
 
-        <item android:id="@+id/drawer_favourite"
+        <item android:id="@+id/drawer_repos"
               android:checked="false"
-              android:icon="@drawable/ic_cast_dark"
-              android:title="Favourite"/>
+              android:icon="@drawable/ic_layers_24dp"
+              android:title="@string/drawer_repos"/>
 
         <item android:id="@+id/drawer_settings"
               android:checked="false"
-              android:icon="@drawable/ic_cast_dark"
-              android:title="Settings"/>
+              android:icon="@drawable/ic_setting_light"
+              android:title="@string/drawer_settings"/>
 
     </group>
 </menu>

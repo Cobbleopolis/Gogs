@@ -67,17 +67,35 @@ object GogsAPI {
 		}, RequestMethod.GET)
 	}
 
+	def getUser (callback: => User => Unit, authUser: User = authUser): Unit = {
+		request("api/v1/users/" + authUser.username, authUser, new JsonHttpResponseHandler() {
+			override def onSuccess(statusCode: Int, headers: Array[Header], responseBody: JSONObject): Unit = {
+				callback(User.parseFromJSON(responseBody))
+			}
+		}, RequestMethod.GET)
+	}
+
 	private def request(urn: String, authUser: User, handler: JsonHttpResponseHandler, requestMethod: RequestMethod.type, requestParams: RequestParams = null): Unit = {
 		client.addHeader("Authorization", authUser.getAuthentication)
 		requestMethod match {
-			case RequestMethod.GET => client.get(url + urn, requestParams, handler)
-			case RequestMethod.POST => client.post(url + urn, requestParams, handler)
-			case RequestMethod.PUT => client.put(url + urn, requestParams, handler)
-			case RequestMethod.PATCH => client.patch(url + urn, requestParams, handler)
-			case RequestMethod.DELETE => client.delete(url + urn, requestParams, handler)
-			case RequestMethod.HEAD => client.head(url + urn, requestParams, handler)
-			case RequestMethod.OPTIONS => client.head(url + urn, requestParams, handler)
+			case RequestMethod.GET =>
+				client.get(url + urn, requestParams, handler)
+			case RequestMethod.POST =>
+				client.post(url + urn, requestParams, handler)
+			case RequestMethod.PUT =>
+				client.put(url + urn, requestParams, handler)
+			case RequestMethod.PATCH =>
+				client.patch(url + urn, requestParams, handler)
+			case RequestMethod.DELETE =>
+				client.delete(url + urn, requestParams, handler)
+			case RequestMethod.HEAD =>
+				client.head(url + urn, requestParams, handler)
+			case RequestMethod.OPTIONS =>
+				client.head(url + urn, requestParams, handler)
 		}
 	}
 
+	def getAuthUser: User = authUser
+
+	def getURL: String = url
 }

@@ -10,7 +10,7 @@ import com.cobble.gogs.app.gogs.{GogsAPI, User}
 import com.cobble.gogs.app.util.Prefs
 import com.loopj.android.http.AsyncHttpClient
 
-class LoginActivity extends AppCompatActivity {
+class LoginActivity extends CobbleActivity {
 
 	var serverText: EditText = _
 
