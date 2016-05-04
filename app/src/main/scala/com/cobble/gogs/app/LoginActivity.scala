@@ -80,7 +80,7 @@ class LoginActivity extends CobbleActivity {
 		authUser.username = username
 		authUser.setPassword(password)
 		GogsAPI.getUserAccessTokens(tokens => {
-			progressDialog.setMessage("Message get")
+			progressDialog.setMessage("Getting token")
 			progressDialog.dismiss()
 			if(!tokens.isEmpty) {
 				var key: String = ""
