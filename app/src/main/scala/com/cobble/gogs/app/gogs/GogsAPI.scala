@@ -1,6 +1,8 @@
 package com.cobble.gogs.app.gogs
 
+import com.cobble.gogs.app.R
 import com.cobble.gogs.app.reference.RequestMethod
+import com.cobble.gogs.app.util.Prefs
 import com.loopj.android.http.{AsyncHttpClient, JsonHttpResponseHandler, RequestParams}
 import cz.msebera.android.httpclient.Header
 import org.json.{JSONArray, JSONObject}
@@ -16,6 +18,15 @@ object GogsAPI {
 	var readTimeout: Int = 5000
 
 	var connectionTimeout: Int = 5000
+
+	def setAPIFromPrefs(): Unit = {
+		setURL(Prefs.getString(R.string.userData_protocol) + Prefs.getString(R.string.userData_server))
+		val authUser: User = new User()
+		authUser.username = Prefs.getString(R.string.userData_username)
+		authUser.token = new Token()
+		authUser.token.sha1 = Prefs.getString(R.string.userData_token)
+		setAuthUser(authUser)
+	}
 
 	def setURL(apiUri: String): Unit = {
 		url = apiUri.replaceAll("/+$", "") + "/"
@@ -57,10 +68,12 @@ object GogsAPI {
 			}
 
 			override def onFailure(statusCode: Int, headers: Array[Header], error: Throwable, errorObject: JSONObject): Unit = {
+				println("Error " + statusCode + "\n" + errorObject)
 				callback(Array[Token]())
 			}
 
 			override def onFailure(statusCode: Int, headers: Array[Header], errorString: String, error: Throwable): Unit = {
+				println("Error " + statusCode + "\n" + errorString)
 				callback(Array[Token]())
 			}
 

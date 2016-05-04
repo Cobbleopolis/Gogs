@@ -11,21 +11,12 @@ class GogsApp extends Application {
 	override def onCreate(): Unit = {
 		super.onCreate()
 		Prefs.initalize(getApplicationContext)
-		setAPI()
+		GogsAPI.setAPIFromPrefs()
 	}
 
 	override protected def attachBaseContext(base: Context) = {
 		super.attachBaseContext(base)
 		MultiDex.install(this)
-	}
-
-	def setAPI(): Unit = {
-		GogsAPI.setURL(Prefs.getString(R.string.userData_protocol) + Prefs.getString(R.string.userData_server))
-		val authUser: User = new User()
-		authUser.username = Prefs.getString(R.string.userData_username)
-		authUser.token = new Token()
-		authUser.token.sha1 = Prefs.getString(R.string.userData_token)
-		GogsAPI.setAuthUser(authUser)
 	}
 
 }

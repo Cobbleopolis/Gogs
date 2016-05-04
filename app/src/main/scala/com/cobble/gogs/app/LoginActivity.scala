@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget._
 import com.cobble.gogs.app.gogs.{GogsAPI, User}
-import com.cobble.gogs.app.util.Prefs
+import com.cobble.gogs.app.util.{GogsUtil, Prefs}
 import com.loopj.android.http.AsyncHttpClient
 
 class LoginActivity extends CobbleActivity {
@@ -29,6 +29,8 @@ class LoginActivity extends CobbleActivity {
 	protected override def onCreate(savedInstanceState: Bundle) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_login)
+
+
 
 		serverText = findViewById(R.id.input_server).asInstanceOf[EditText]
 
