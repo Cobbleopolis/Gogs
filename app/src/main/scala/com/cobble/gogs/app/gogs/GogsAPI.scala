@@ -89,6 +89,7 @@ object GogsAPI {
 	}
 
 	private def request(urn: String, authUser: User, handler: JsonHttpResponseHandler, requestMethod: RequestMethod.type, requestParams: RequestParams = null): Unit = {
+		println("Calling " + url + urn)
 		client.addHeader("Authorization", authUser.getAuthentication)
 		requestMethod match {
 			case RequestMethod.GET =>

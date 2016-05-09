@@ -79,6 +79,7 @@ class LoginActivity extends CobbleActivity {
 		val authUser: User = new User()
 		authUser.username = username
 		authUser.setPassword(password)
+		GogsAPI.setURL(protocol + server)
 		GogsAPI.getUserAccessTokens(tokens => {
 			progressDialog.setMessage("Getting token")
 			progressDialog.dismiss()
