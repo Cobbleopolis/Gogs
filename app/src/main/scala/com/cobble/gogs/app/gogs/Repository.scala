@@ -28,7 +28,6 @@ class Repository {
 	var permissionPull: Boolean = false
 
 
-
 }
 
 object Repository {
@@ -36,7 +35,7 @@ object Repository {
 		if (json != null) {
 			val repo: Repository = new Repository
 			repo.id = Util.getFromJSON(json, "id", null).asInstanceOf[Int]
-			if(json.has("owner"))
+			if (json.has("owner"))
 				repo.owner = User.parseFromJSON(Util.getFromJSON(json, "owner", null).asInstanceOf[JSONObject])
 			repo.fullName = Util.getFromJSON(json, "full_name", null).asInstanceOf[String]
 			repo.isPrivate = Util.getFromJSON(json, "private", null).asInstanceOf[Boolean]

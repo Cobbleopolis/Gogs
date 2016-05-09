@@ -3,9 +3,9 @@ package com.cobble.gogs.app.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.{Button, Toast}
-import com.cobble.gogs.app.{ActivityLauncher, R}
+import android.widget.Button
 import com.cobble.gogs.app.util.Prefs
+import com.cobble.gogs.app.{ActivityLauncher, R}
 
 class SettingsFragment extends CobbleFragment(R.layout.frag_settings) {
 
@@ -15,7 +15,7 @@ class SettingsFragment extends CobbleFragment(R.layout.frag_settings) {
 		super.onActivityCreated(savedInstanceState)
 		signOutButton = getView.findViewById(R.id.settings_button_signOut).asInstanceOf[Button]
 		signOutButton.setOnClickListener(new View.OnClickListener() {
-			override def onClick (view: View): Unit = {
+			override def onClick(view: View): Unit = {
 				signOut()
 			}
 		})

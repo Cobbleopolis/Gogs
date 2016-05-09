@@ -28,7 +28,7 @@
               android:id="@+id/username"
               android:layout_above="@+id/email"
               android:layout_alignLeft="@+id/profile_image"
-              android:layout_alignStart="@+id/profile_image" />
+              android:layout_alignStart="@+id/profile_image"/>
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -39,5 +39,5 @@
               android:textSize="14sp"
               android:layout_alignParentBottom="true"
               android:layout_alignLeft="@+id/username"
-              android:layout_alignStart="@+id/username" />
+              android:layout_alignStart="@+id/username"/>
 </RelativeLayout>

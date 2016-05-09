@@ -1,7 +1,7 @@
 package com.cobble.gogs.app.util
 
 import android.util.Log
-import com.cobble.gogs.app.{GogsApp, R}
+import com.cobble.gogs.app.R
 import com.loopj.android.http.{AsyncHttpClient, JsonHttpResponseHandler}
 
 object GogsUtil {

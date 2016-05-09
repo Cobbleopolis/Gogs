@@ -4,7 +4,7 @@ import org.json.{JSONException, JSONObject}
 
 object Util {
 
-	def getFromJSON(json: JSONObject, field: String, defaultValue: Any = null): Any ={
+	def getFromJSON(json: JSONObject, field: String, defaultValue: Any = null): Any = {
 		if (json.has(field))
 			try {
 				json.get(field)

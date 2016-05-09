@@ -8,7 +8,6 @@ import android.widget.ImageView
 class DownloadImageTask(var bmImage: ImageView) extends AsyncTask[String, Void, Bitmap] {
 
 
-
 	protected def doInBackground(urls: String*): Bitmap = {
 		val urldisplay = urls(0)
 		var mIcon11: Bitmap = null
