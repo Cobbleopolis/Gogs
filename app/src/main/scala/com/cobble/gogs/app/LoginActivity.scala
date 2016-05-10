@@ -100,6 +100,7 @@ class LoginActivity extends CobbleActivity {
 		Prefs.writeString(R.string.userData_protocol, protocol)
 		Prefs.writeString(R.string.userData_username, username)
 		Prefs.writeString(R.string.userData_token, token)
+		GogsAPI.setAPIFromPrefs()
 		startActivity(new Intent(this, classOf[MainActivity]))
 		finish()
 	}
