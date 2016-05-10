@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener
-import android.support.v4.app.FragmentManager
+import android.support.v4.app.{Fragment, FragmentManager}
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -35,7 +35,7 @@ class MainActivity extends CobbleActivity {
 
 	private var userEmailText: TextView = _
 
-	private val frags: Map[Int, CobbleFragment] = Map[Int, CobbleFragment](
+	private val frags: Map[Int, Fragment] = Map[Int, Fragment](
 		R.id.drawer_profile -> new HomeFragment(),
 		R.id.drawer_repos -> new RepoFragment(),
 		R.id.drawer_settings -> new SettingsFragment()
@@ -111,7 +111,7 @@ class MainActivity extends CobbleActivity {
 	}
 
 	private def selectNavItem(menuItem: MenuItem): Unit = {
-		val fragment: CobbleFragment = frags.getOrElse(menuItem.getItemId, frags.get(R.id.drawer_profile)).asInstanceOf[CobbleFragment]
+		val fragment: Fragment = frags.getOrElse(menuItem.getItemId, frags.get(R.id.drawer_profile)).asInstanceOf[Fragment]
 		val fragmentManager: FragmentManager = getSupportFragmentManager
 		fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
 		menuItem.setChecked(true)
