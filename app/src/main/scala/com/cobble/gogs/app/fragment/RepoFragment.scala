@@ -11,7 +11,7 @@ import com.cobble.gogs.app.gogs.GogsAPI
 
 class RepoFragment extends CobbleListFragment(R.layout.frag_repos) {
 
-	val listItems: util.ArrayList[String] = new util.ArrayList[String]()
+	val listItems: util.ArrayList[util.Map[String, String]] = new util.ArrayList[util.Map[String, String]]()
 
 	override def onActivityCreated(savedInstanceState: Bundle): Unit = {
 		listItems.clear()
@@ -24,9 +24,17 @@ class RepoFragment extends CobbleListFragment(R.layout.frag_repos) {
 		Toast.makeText(getActivity.getApplicationContext, "Request Started", Toast.LENGTH_SHORT).show()
 		GogsAPI.getUserRepos(repos => {
 			repos.foreach(repo => {
-				listItems.add(repo.fullName)
+				val mRepo = new util.HashMap[String, String]()
+				mRepo.put("head", repo.fullName)
+				mRepo.put("sub", repo.htmlUrl)
+				listItems.add(mRepo)
 			})
-			setListAdapter(new ArrayAdapter[String](getActivity.getApplicationContext, android.R.layout.simple_list_item_1, listItems) {
+			setListAdapter(new SimpleAdapter(
+				getActivity.getApplicationContext,
+				listItems,
+				android.R.layout.simple_list_item_2,
+				Array("head", "sub"),
+				Array(android.R.id.text1, android.R.id.text2)) {
 				override def getView(pos: Int, convertView: View, parent: ViewGroup): View = {
 					val v = super.getView(pos, convertView, parent)
 					val textView: TextView = v.findViewById(android.R.id.text1).asInstanceOf[TextView]
