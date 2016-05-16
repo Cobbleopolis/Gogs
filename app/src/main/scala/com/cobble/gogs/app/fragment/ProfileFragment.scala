@@ -15,11 +15,11 @@ class ProfileFragment extends CobbleListFragment(R.layout.frag_profile) {
 
 	override def onActivityCreated(savedInstanceState: Bundle): Unit = {
 		listItems.clear()
-		requestRepos()
+		requestUser()
 		super.onActivityCreated(savedInstanceState)
 	}
 
-	def requestRepos(): Unit = {
+	def requestUser(): Unit = {
 		val fields: Array[String] = getResources.getStringArray(R.array.user_frag_list_title)
 		GogsAPI.getUser(user => {
 			for (i <- fields.indices) {
