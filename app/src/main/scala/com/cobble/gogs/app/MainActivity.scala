@@ -86,8 +86,7 @@ class MainActivity extends CobbleActivity {
 
 		mNav = findViewById(R.id.main_drawer).asInstanceOf[NavigationView]
 		setupDrawerContent(mNav)
-
-		//		new DownloadImageTask(findViewById(R.id.profile_image).asInstanceOf[ImageView]).execute(GogsUtil.protocol + GogsUtil.server + GogsAPI.)
+		selectNavItem(mNav.getMenu.findItem(R.id.drawer_profile))
 	}
 
 	def setupDrawerContent(navigationView: NavigationView): Unit = {
