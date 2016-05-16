@@ -10,14 +10,10 @@ import org.json.{JSONArray, JSONObject}
 object GogsAPI {
 
 	var client: AsyncHttpClient = new AsyncHttpClient()
-
-	private var url: String = ""
-
-	private var authUser: User = null
-
 	var readTimeout: Int = 5000
-
 	var connectionTimeout: Int = 5000
+	private var url: String = ""
+	private var authUser: User = null
 
 	def setAPIFromPrefs(): Unit = {
 		setURL(Prefs.getString(R.string.userData_protocol) + Prefs.getString(R.string.userData_server))
@@ -51,6 +47,27 @@ object GogsAPI {
 		}, RequestMethod.GET)
 	}
 
+	private def request(urn: String, authUser: User, handler: JsonHttpResponseHandler, requestMethod: RequestMethod.type, requestParams: RequestParams = null): Unit = {
+		println("Calling " + url + urn)
+		client.addHeader("Authorization", authUser.getAuthentication)
+		requestMethod match {
+			case RequestMethod.GET =>
+				client.get(url + urn, requestParams, handler)
+			case RequestMethod.POST =>
+				client.post(url + urn, requestParams, handler)
+			case RequestMethod.PUT =>
+				client.put(url + urn, requestParams, handler)
+			case RequestMethod.PATCH =>
+				client.patch(url + urn, requestParams, handler)
+			case RequestMethod.DELETE =>
+				client.delete(url + urn, requestParams, handler)
+			case RequestMethod.HEAD =>
+				client.head(url + urn, requestParams, handler)
+			case RequestMethod.OPTIONS =>
+				client.head(url + urn, requestParams, handler)
+		}
+	}
+
 	def getUserAccessTokens(callback: => Array[Token] => Unit, authUser: User = authUser): Unit = {
 		request("api/v1/users/" + authUser.username + "/tokens", authUser, new JsonHttpResponseHandler() {
 
@@ -80,33 +97,12 @@ object GogsAPI {
 		}, RequestMethod.GET)
 	}
 
-	def getUser (callback: => User => Unit, authUser: User = authUser): Unit = {
+	def getUser(callback: => User => Unit, authUser: User = authUser): Unit = {
 		request("api/v1/users/" + authUser.username, authUser, new JsonHttpResponseHandler() {
 			override def onSuccess(statusCode: Int, headers: Array[Header], responseBody: JSONObject): Unit = {
 				callback(User.parseFromJSON(responseBody))
 			}
 		}, RequestMethod.GET)
-	}
-
-	private def request(urn: String, authUser: User, handler: JsonHttpResponseHandler, requestMethod: RequestMethod.type, requestParams: RequestParams = null): Unit = {
-		println("Calling " + url + urn)
-		client.addHeader("Authorization", authUser.getAuthentication)
-		requestMethod match {
-			case RequestMethod.GET =>
-				client.get(url + urn, requestParams, handler)
-			case RequestMethod.POST =>
-				client.post(url + urn, requestParams, handler)
-			case RequestMethod.PUT =>
-				client.put(url + urn, requestParams, handler)
-			case RequestMethod.PATCH =>
-				client.patch(url + urn, requestParams, handler)
-			case RequestMethod.DELETE =>
-				client.delete(url + urn, requestParams, handler)
-			case RequestMethod.HEAD =>
-				client.head(url + urn, requestParams, handler)
-			case RequestMethod.OPTIONS =>
-				client.head(url + urn, requestParams, handler)
-		}
 	}
 
 	def getAuthUser: User = authUser

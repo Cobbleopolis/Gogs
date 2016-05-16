@@ -22,16 +22,12 @@ class RepoFragment extends CobbleListFragment(R.layout.frag_repos) {
 
 	}
 
-	override def onListItemClick(listView: ListView, view: View, pos: Int, id: Long): Unit = {
-		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(view.findViewById(android.R.id.text2).asInstanceOf[TextView].getText.toString)))
-	}
-
 	def requestRepos(): Unit = {
-//		Toast.makeText(getActivity.getApplicationContext, "Request Started", Toast.LENGTH_SHORT).show()
+		//		Toast.makeText(getActivity.getApplicationContext, "Request Started", Toast.LENGTH_SHORT).show()
 		GogsAPI.getUserRepos(repos => {
 			repos.foreach(repo => {
 				val mRepo = new util.HashMap[String, String]()
-				mRepo.put("head",  (if(repo.isPrivate) "\uD83D\uDD12 " else "") + repo.fullName)
+				mRepo.put("head", (if (repo.isPrivate) "\uD83D\uDD12 " else "") + repo.fullName)
 				mRepo.put("sub", repo.htmlUrl)
 				listItems.add(mRepo)
 			})
@@ -49,6 +45,10 @@ class RepoFragment extends CobbleListFragment(R.layout.frag_repos) {
 				}
 			})
 		})
+	}
+
+	override def onListItemClick(listView: ListView, view: View, pos: Int, id: Long): Unit = {
+		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(view.findViewById(android.R.id.text2).asInstanceOf[TextView].getText.toString)))
 	}
 
 }

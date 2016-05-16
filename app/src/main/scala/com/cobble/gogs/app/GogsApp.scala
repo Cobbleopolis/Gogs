@@ -1,10 +1,10 @@
 package com.cobble.gogs.app
 
 import android.app.Application
-import android.content.{Context, SharedPreferences}
+import android.content.Context
 import android.support.multidex.MultiDex
-import com.cobble.gogs.app.gogs.{GogsAPI, Token, User}
-import com.cobble.gogs.app.util.{GogsUtil, Prefs}
+import com.cobble.gogs.app.gogs.GogsAPI
+import com.cobble.gogs.app.util.Prefs
 
 class GogsApp extends Application {
 

@@ -3,11 +3,10 @@ package com.cobble.gogs.app
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget._
 import com.cobble.gogs.app.gogs.{GogsAPI, User}
-import com.cobble.gogs.app.util.{GogsUtil, Prefs}
+import com.cobble.gogs.app.util.Prefs
 import com.loopj.android.http.AsyncHttpClient
 
 class LoginActivity extends CobbleActivity {
@@ -83,7 +82,7 @@ class LoginActivity extends CobbleActivity {
 		GogsAPI.getUserAccessTokens(tokens => {
 			progressDialog.setMessage("Getting token")
 			progressDialog.dismiss()
-			if(!tokens.isEmpty) {
+			if (!tokens.isEmpty) {
 				var key: String = ""
 				for (token <- tokens)
 					if (token.name == "gogs-app")

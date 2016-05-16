@@ -17,69 +17,57 @@ class User {
 	  * The username of the user
 	  */
 	var username: String = ""
-
+	/**
+	  * The user's full name
+	  */
+	var fullName: String = ""
+	/**
+	  * The email of the user. This is empty without authentication
+	  */
+	var email: String = ""
+	/**
+	  * The url to the user's profile picture
+	  */
+	var avatarUrl: String = ""
+	/**
+	  * The token used to authenticate this user
+	  */
+	var token: Token = null
+	/**
+	  * The login name of the user. This will be `null` if one is not provided.
+	  */
+	var loginName: String = null
+	/**
+	  * The website of the user. This will be `null` if one is not provided.
+	  */
+	var website: String = null
+	/**
+	  * The location of the user. This will be `null` if one is not provided.
+	  */
+	var location: String = null
+	/**
+	  * `true` if the user is active, otherwise `false`. This will be `false` if one is not provided.
+	  */
+	var active: Boolean = false
+	/**
+	  * `true` if the user is an admin, otherwise `false`. This will be `false` if one is not provided.
+	  */
+	var admin: Boolean = false
+	var allowImportLocal: Boolean = false
+	var allowGitHook: Boolean = false
 	/**
 	  * The password of the user. This is only used when getting the authentication for a user when a token is not provided.
 	  */
 	private var password: String = ""
 
-	/**
-	  * The user's full name
-	  */
-	var fullName: String = ""
-
-	/**
-	  * The email of the user. This is empty without authentication
-	  */
-	var email: String = ""
-
-	/**
-	  * The url to the user's profile picture
-	  */
-	var avatarUrl: String = ""
-
-	/**
-	  * The token used to authenticate this user
-	  */
-	var token: Token = null
-
-	/**
-	  * The login name of the user. This will be `null` if one is not provided.
-	  */
-	var loginName: String = null
-
-	/**
-	  * The website of the user. This will be `null` if one is not provided.
-	  */
-	var website: String = null
-
-	/**
-	  * The location of the user. This will be `null` if one is not provided.
-	  */
-	var location: String = null
-
-	/**
-	  * `true` if the user is active, otherwise `false`. This will be `false` if one is not provided.
-	  */
-	var active: Boolean = false
-
-	/**
-	  * `true` if the user is an admin, otherwise `false`. This will be `false` if one is not provided.
-	  */
-	var admin: Boolean = false
-
-	var allowImportLocal: Boolean = false
-
-	var allowGitHook: Boolean = false
+	def getPassword: String = password
 
 	def setPassword(pass: String): Unit = {
 		password = pass
 	}
 
-	def getPassword: String = password
-
 	def getAuthentication: String = {
-		if(token != null)
+		if (token != null)
 			"token " + token
 		else if (!username.isEmpty && !password.isEmpty) {
 			val credentials: String = username + ":" + password
@@ -99,7 +87,7 @@ class User {
 
 object User {
 	def parseFromJSON(json: JSONObject): User = {
-		if(json != null) {
+		if (json != null) {
 			val user = new User()
 			user.username = Util.getFromJSON(json, "username", null).asInstanceOf[String]
 			user.email = Util.getFromJSON(json, "email", null).asInstanceOf[String]

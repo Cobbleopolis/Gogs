@@ -5,7 +5,7 @@ import java.util
 import android.graphics.Color
 import android.os.Bundle
 import android.view.{View, ViewGroup}
-import android.widget.{SimpleAdapter, TextView, Toast}
+import android.widget.{SimpleAdapter, TextView}
 import com.cobble.gogs.app.R
 import com.cobble.gogs.app.gogs.GogsAPI
 
@@ -26,13 +26,13 @@ class ProfileFragment extends CobbleListFragment(R.layout.frag_profile) {
 				val mRepo = new util.HashMap[String, String]()
 				mRepo.put("head", fields(i))
 				mRepo.put("sub", i match {
-					case 0 => if(user.id != -1) user.id.toString else "N/A"
-					case 1 => if(user.username != null && !user.username.isEmpty) user.username else "N/A"
-					case 2 => if(user.fullName != null && !user.fullName.isEmpty) user.fullName else "N/A"
-					case 3 => if(user.email != null && !user.email.isEmpty) user.email else "N/A"
-					case 4 => if(user.avatarUrl != null && !user.avatarUrl.isEmpty) user.avatarUrl else "N/A"
-					case 5 => if(user.website != null && !user.website.isEmpty) user.website else "N/A"
-					case 6 => if(user.location != null && !user.location.isEmpty) user.location else "N/A"
+					case 0 => if (user.id != -1) user.id.toString else "N/A"
+					case 1 => if (user.username != null && !user.username.isEmpty) user.username else "N/A"
+					case 2 => if (user.fullName != null && !user.fullName.isEmpty) user.fullName else "N/A"
+					case 3 => if (user.email != null && !user.email.isEmpty) user.email else "N/A"
+					case 4 => if (user.avatarUrl != null && !user.avatarUrl.isEmpty) user.avatarUrl else "N/A"
+					case 5 => if (user.website != null && !user.website.isEmpty) user.website else "N/A"
+					case 6 => if (user.location != null && !user.location.isEmpty) user.location else "N/A"
 					case _ => "N/A"
 				})
 				listItems.add(mRepo)

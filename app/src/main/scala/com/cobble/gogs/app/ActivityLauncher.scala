@@ -2,7 +2,7 @@ package com.cobble.gogs.app
 
 import android.content.Intent
 import android.os.Bundle
-import com.cobble.gogs.app.gogs.{GogsAPI, Token, User}
+import com.cobble.gogs.app.gogs.GogsAPI
 import com.cobble.gogs.app.util.Prefs
 
 class ActivityLauncher extends CobbleActivity {
