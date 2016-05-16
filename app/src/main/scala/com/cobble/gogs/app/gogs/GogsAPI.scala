@@ -1,5 +1,6 @@
 package com.cobble.gogs.app.gogs
 
+import android.util.Log
 import com.cobble.gogs.app.R
 import com.cobble.gogs.app.reference.RequestMethod
 import com.cobble.gogs.app.util.Prefs
@@ -48,7 +49,7 @@ object GogsAPI {
 	}
 
 	private def request(urn: String, authUser: User, handler: JsonHttpResponseHandler, requestMethod: RequestMethod.type, requestParams: RequestParams = null): Unit = {
-		println("Calling " + url + urn)
+		Log.d("GogsAPI", "Calling " + url + urn)
 		client.addHeader("Authorization", authUser.getAuthentication)
 		requestMethod match {
 			case RequestMethod.GET =>
