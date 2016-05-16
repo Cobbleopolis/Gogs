@@ -1,8 +1,5 @@
 package com.cobble.gogs.app
 
-import java.net.URL
-
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener
@@ -13,33 +10,25 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.widget.{ImageView, TextView}
-import com.cobble.gogs.app.fragment.{CobbleFragment, ProfileFragment, RepoFragment, SettingsFragment}
+import com.cobble.gogs.app.fragment.{ProfileFragment, RepoFragment, SettingsFragment}
 import com.cobble.gogs.app.gogs.GogsAPI
-import com.cobble.gogs.app.tasks.DownloadImageTask
-import com.cobble.gogs.app.util.{GogsUtil, Prefs}
+import com.cobble.gogs.app.util.Prefs
 import com.squareup.picasso.Picasso
 
 class MainActivity extends CobbleActivity {
-
-	private var toolbar: Toolbar = _
-
-	private var mNav: NavigationView = _
-
-	private var mDrawer: DrawerLayout = _
-
-	private var drawerToggle: ActionBarDrawerToggle = _
-
-	private var profileImage: ImageView = _
-
-	private var usernameText: TextView = _
-
-	private var userEmailText: TextView = _
 
 	private val frags: Map[Int, Fragment] = Map[Int, Fragment](
 		R.id.drawer_profile -> new ProfileFragment(),
 		R.id.drawer_repos -> new RepoFragment(),
 		R.id.drawer_settings -> new SettingsFragment()
 	)
+	private var toolbar: Toolbar = _
+	private var mNav: NavigationView = _
+	private var mDrawer: DrawerLayout = _
+	private var drawerToggle: ActionBarDrawerToggle = _
+	private var profileImage: ImageView = _
+	private var usernameText: TextView = _
+	private var userEmailText: TextView = _
 
 	override def onOptionsItemSelected(item: MenuItem): Boolean = {
 		item.getItemId match {
@@ -74,8 +63,10 @@ class MainActivity extends CobbleActivity {
 
 		GogsAPI.getUser(user => {
 			var url: String = user.avatarUrl
-			if (!url.matches("^(https?|ftp)://.*$")) { //needs protocol
-				if (!url.matches("((.*)\\.(.*))+/(.*/)*$")) { //needs domain
+			if (!url.matches("^(https?|ftp)://.*$")) {
+				//needs protocol
+				if (!url.matches("((.*)\\.(.*))+/(.*/)*$")) {
+					//needs domain
 					url = Prefs.getString(R.string.userData_protocol) + Prefs.getString(R.string.userData_server) + url
 				} else {
 					url = Prefs.getString(R.string.userData_protocol) + url.replaceAll("^/+", "")
@@ -84,8 +75,8 @@ class MainActivity extends CobbleActivity {
 			println(url)
 			Picasso.`with`(getApplicationContext)
 				.load(url)
-			    .placeholder(R.drawable.default_profile)
-			    .error(R.drawable.default_profile)
+				.placeholder(R.drawable.default_profile)
+				.error(R.drawable.default_profile)
 				.into(profileImage)
 
 			usernameText.setText(user.username)
@@ -96,7 +87,7 @@ class MainActivity extends CobbleActivity {
 		mNav = findViewById(R.id.main_drawer).asInstanceOf[NavigationView]
 		setupDrawerContent(mNav)
 
-//		new DownloadImageTask(findViewById(R.id.profile_image).asInstanceOf[ImageView]).execute(GogsUtil.protocol + GogsUtil.server + GogsAPI.)
+		//		new DownloadImageTask(findViewById(R.id.profile_image).asInstanceOf[ImageView]).execute(GogsUtil.protocol + GogsUtil.server + GogsAPI.)
 	}
 
 	def setupDrawerContent(navigationView: NavigationView): Unit = {
@@ -120,6 +111,6 @@ class MainActivity extends CobbleActivity {
 	}
 
 	private def setupDrawerToggle: ActionBarDrawerToggle = {
-		new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open,  R.string.navigation_drawer_close)
+		new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
 	}
 }
