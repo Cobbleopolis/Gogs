@@ -4,4 +4,14 @@
         <item>http://</item>
         <item>https://</item>
     </string-array>
+
+    <string-array name="user_frag_list_title">
+        <item>Id</item>
+        <item>Username</item>
+        <item>Full Name</item>
+        <item>Email</item>
+        <item>Avatar Url</item>
+        <item>Website</item>
+        <item>Location</item>
+    </string-array>
 </resources>

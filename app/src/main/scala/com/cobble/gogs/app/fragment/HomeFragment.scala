@@ -1,33 +1,54 @@
 package com.cobble.gogs.app.fragment
 
+import java.util
+
 import android.graphics.Color
 import android.os.Bundle
-import android.view.ViewGroup.LayoutParams
-import android.widget.{RelativeLayout, TextView, Toast}
+import android.view.{View, ViewGroup}
+import android.widget.{SimpleAdapter, TextView, Toast}
 import com.cobble.gogs.app.R
 import com.cobble.gogs.app.gogs.GogsAPI
 
-class HomeFragment extends CobbleFragment(R.layout.frag_home) {
+class HomeFragment extends CobbleListFragment(R.layout.frag_home) {
+
+	val listItems: util.ArrayList[util.Map[String, String]] = new util.ArrayList[util.Map[String, String]]()
 
 	override def onActivityCreated(savedInstanceState: Bundle): Unit = {
+		listItems.clear()
 		requestRepos()
 		super.onActivityCreated(savedInstanceState)
 	}
 
 	def requestRepos(): Unit = {
-		val mount: RelativeLayout = getView.findViewById(R.id.repoList).asInstanceOf[RelativeLayout]
-		Toast.makeText(getActivity.getApplicationContext, "Request Started", Toast.LENGTH_SHORT).show()
-		GogsAPI.getUserRepos(repos => {
-			var i = 0
-			repos.foreach(repo => {
-				val textView = new TextView(getActivity.getApplicationContext)
-				textView.setText(repo.fullName)
-				val layoutParams: RelativeLayout.LayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-				layoutParams.setMargins(0, (i + 1) * textView.getTextSize.toInt, 0, 0)
-				textView.setTextColor(Color.BLACK)
-				textView.setLayoutParams(layoutParams)
-				mount.addView(textView)
-				i += 1
+		val fields: Array[String] = getResources.getStringArray(R.array.user_frag_list_title)
+		GogsAPI.getUser(user => {
+			for (i <- fields.indices) {
+				val mRepo = new util.HashMap[String, String]()
+				mRepo.put("head", fields(i))
+				mRepo.put("sub", i match {
+					case 0 => if(user.id != -1) user.id.toString else "N/A"
+					case 1 => if(user.username != null) user.username else "N/A"
+					case 2 => if(user.fullName != null) user.fullName else "N/A"
+					case 3 => if(user.email != null) user.email else "N/A"
+					case 4 => if(user.avatarUrl != null) user.avatarUrl else "N/A"
+					case 5 => if(user.website != null) user.website else "N/A"
+					case 6 => if(user.location != null) user.location else "N/A"
+					case _ => "N/A"
+				})
+				listItems.add(mRepo)
+			}
+			setListAdapter(new SimpleAdapter(
+				getActivity.getApplicationContext,
+				listItems,
+				android.R.layout.simple_list_item_2,
+				Array("head", "sub"),
+				Array(android.R.id.text1, android.R.id.text2)) {
+				override def getView(pos: Int, convertView: View, parent: ViewGroup): View = {
+					val v = super.getView(pos, convertView, parent)
+					val textView: TextView = v.findViewById(android.R.id.text1).asInstanceOf[TextView]
+					textView.setTextColor(Color.BLACK)
+					v
+				}
 			})
 		})
 	}
