@@ -8,6 +8,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.MenuItem
 import android.widget.{ImageView, TextView}
 import com.cobble.gogs.app.fragment.{ProfileFragment, RepoFragment, SettingsFragment}
@@ -72,7 +73,7 @@ class MainActivity extends CobbleActivity {
 					url = Prefs.getString(R.string.userData_protocol) + url.replaceAll("^/+", "")
 				}
 			}
-			println(url)
+			Log.d("AvatarURL", url)
 			Picasso.`with`(getApplicationContext)
 				.load(url)
 				.placeholder(R.drawable.default_profile)
