@@ -21,7 +21,7 @@ class RepoFragment extends CobbleListFragment(R.layout.frag_repos) {
 	}
 
 	def requestRepos(): Unit = {
-		Toast.makeText(getActivity.getApplicationContext, "Request Started", Toast.LENGTH_SHORT).show()
+//		Toast.makeText(getActivity.getApplicationContext, "Request Started", Toast.LENGTH_SHORT).show()
 		GogsAPI.getUserRepos(repos => {
 			repos.foreach(repo => {
 				val mRepo = new util.HashMap[String, String]()
