@@ -13,7 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.widget.{ImageView, TextView}
-import com.cobble.gogs.app.fragment.{CobbleFragment, HomeFragment, RepoFragment, SettingsFragment}
+import com.cobble.gogs.app.fragment.{CobbleFragment, ProfileFragment, RepoFragment, SettingsFragment}
 import com.cobble.gogs.app.gogs.GogsAPI
 import com.cobble.gogs.app.tasks.DownloadImageTask
 import com.cobble.gogs.app.util.{GogsUtil, Prefs}
@@ -36,7 +36,7 @@ class MainActivity extends CobbleActivity {
 	private var userEmailText: TextView = _
 
 	private val frags: Map[Int, Fragment] = Map[Int, Fragment](
-		R.id.drawer_profile -> new HomeFragment(),
+		R.id.drawer_profile -> new ProfileFragment(),
 		R.id.drawer_repos -> new RepoFragment(),
 		R.id.drawer_settings -> new SettingsFragment()
 	)

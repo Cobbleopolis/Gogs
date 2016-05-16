@@ -9,7 +9,7 @@ import android.widget.{SimpleAdapter, TextView, Toast}
 import com.cobble.gogs.app.R
 import com.cobble.gogs.app.gogs.GogsAPI
 
-class HomeFragment extends CobbleListFragment(R.layout.frag_home) {
+class ProfileFragment extends CobbleListFragment(R.layout.frag_profile) {
 
 	val listItems: util.ArrayList[util.Map[String, String]] = new util.ArrayList[util.Map[String, String]]()
 
@@ -46,7 +46,9 @@ class HomeFragment extends CobbleListFragment(R.layout.frag_home) {
 				override def getView(pos: Int, convertView: View, parent: ViewGroup): View = {
 					val v = super.getView(pos, convertView, parent)
 					val textView: TextView = v.findViewById(android.R.id.text1).asInstanceOf[TextView]
+					val textView2: TextView = v.findViewById(android.R.id.text2).asInstanceOf[TextView]
 					textView.setTextColor(Color.BLACK)
+					textView2.setTextColor(Color.BLACK)
 					v
 				}
 			})
